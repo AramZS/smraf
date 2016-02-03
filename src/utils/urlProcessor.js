@@ -1,5 +1,5 @@
 module.exports = {
-
+	//Test with https://jsfiddle.net/qsq5nfrw/
 	socials: {
 		'description': {
 			field: 'content',
