@@ -1,11 +1,6 @@
 module.exports = {
 
 	socials: {
-		'title': {
-			field: 'content',
-			about: '',
-			usedBy: ['general', 'facebook', 'twitter']
-		},
 		'description': {
 			field: 'content',
 			about: '',
@@ -125,6 +120,8 @@ module.exports = {
 	 */
 	data: [],
 
+  	objs: {},
+
 	getDocument: function(url) {
 		return new Promise(function(resolve, reject) {
 			var xhr = new XMLHttpRequest();
@@ -162,13 +159,15 @@ module.exports = {
 
 				for (var i = 0; i < list.length; i++) {
 					var tagObj = this.getMetaFromTag(list[i]);
-					if (false !== tagObj && this.socials.hasOwnProperty(tagObj.type)){
+          console.log(list[i]);
+          //console.log(tagObj);
+					if (undefined !== tagObj && this.socials.hasOwnProperty(tagObj.type)){
 						tagObj.about = this.socials[tagObj.type].about;
 						tagObj.usedBy = this.socials[tagObj.type].usedBy;
 						this.data.push(tagObj);
 						delete this.socials[tagObj.type];
 					}
-				    console.log(list[i].getAttribute('content')); //second console output
+				    //console.log(list[i].getAttribute('content')); //second console output
 					if ( list.length === i ){
 						return this.data;
 					}
@@ -177,14 +176,17 @@ module.exports = {
 				this.data.push(
 					{
 						type: 'title',
-						content: docFound.title
+						content: docFound.title,
+						about: '',
+						usedBy: ['general', 'facebook', 'twitter']
 					}
 				);
 			}.bind(this)
 		).then( function(){
 			return {
 				set: this.data,
-				unset: this.socials
+				unset: this.socials,
+        		objs: this.objs
 			};
 		}.bind(this));
 
@@ -192,7 +194,10 @@ module.exports = {
 	},
 
 	getMetaFromTag: function(element){
-		return this.checkForValidAttr(element);
+		var objM = this.checkForValidAttr(element);
+	    console.log('gM');
+	    console.log(objM);
+	    return objM;
 	},
 
 	checkForValidAttr: function(tag){
@@ -201,33 +206,49 @@ module.exports = {
 			'rel',
 			'property'
 		];
+    var returned = false;
 		possibleTypes.forEach( function(aTag){
-			if ("" !== tag.getAttribute(aTag) && null !== tag.getAttribute(aTag) && undefined !== tag.getAttribute(aTag) ){
+			if ( "" !== tag.getAttribute(aTag) && null !== tag.getAttribute(aTag) && undefined !== tag.getAttribute(aTag) ){
 				var tagName = tag.getAttribute(aTag);
-				switch (aTag) {
-					case tag.getAttribute(this.socials[tagName].field):
-						return {
-							type: tagName,
-							content: tag.getAttribute(this.socials[tagName].field)
-						};
-					case 'name':
-					case 'property':
-						return {
-							type: tagName,
-							content: tag.getAttribute('content')
-						};
-					case 'rel':
-						return {
-							type: tagName,
-							content: tag.getAttribute('href')
-						};
-					default:
-						return false;
-				}
+        //console.log(tagName);
+        var socials = this.socials[tagName];
+
+        //console.log(socials);
+        //console.log(tag.getAttribute(this.socials[tagName].field));
+        if (!this.socials.hasOwnProperty(tag.getAttribute(aTag))){
+
+          } else {
+	          switch (aTag) {
+	            case 'name':
+	            	returned = this.assignMeta(tagName, tag, 'content');
+	              console.log(returned);
+	              break;
+	            case 'property':
+	              //console.log(tag.content);
+	              returned = this.assignMeta(tagName, tag, 'content');
+	              console.log(returned);
+	              break;
+	            case 'rel':
+	              returned = this.assignMeta(tagName, tag, 'href');
+	              break;
+	          }
+          return returned;
+         }
 			} else {
-				return false;
-			}
-		});
+      	//returned = false;
+        //return returned;
+      }
+		}.bind(this));
+    return returned;
+	},
+
+	assignMeta: function(tagName, tag, tagType) {
+		var returned = {
+            type: tagName,
+            content: tag.getAttribute(tagType)
+          };
+          this.objs[tagName] = returned;
+		  return returned;
 	}
 
 };
