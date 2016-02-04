@@ -7,12 +7,15 @@ import Enter from './components/Enter';
 import Links from './components/Links';
 
 
+/**
 const routes = <Route component={App}>
   <Route path="/links" component={Links} />
   <Route path="/" component={Enter} />
 </Route>;
 
+<Router>{routes}</Router>,
+**/
 ReactDOM.render(
-  <Router>{routes}</Router>,
-  document.getElementById('app')
+    <App />,
+    document.getElementById('app')
 );

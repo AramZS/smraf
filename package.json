@@ -43,6 +43,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "classnames": "^2.2.3",
     "history": "^1.17.0",
     "immutable": "^3.7.6",
     "react": "^0.14.6",
