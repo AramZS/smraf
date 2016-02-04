@@ -1,22 +1,32 @@
+var urlProcessor = require('../../utils/urlProcessor');
 var classNames = require('classnames');
+import { connect } from 'react-redux';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var React = require('react');
 
 var ReactPropTypes = React.PropTypes;
 
-var App = React.createClass({
+let App = ({ dispatch }) => {
 
 	propTypes:{
 		display: ReactPropTypes.object,
 	},
 
 	getInitialState: function() {
-		return {value: 'Hello!'};
+		return {value: 'Type URL here'};
     },
 
     handleChange: function(event) {
-		this.setState({value: event.target.value});
+		var action = {
+			type : 'SET_URL'
+			urlToTest : event.target.value
+		}
+		//this.setState({value: event.target.value});
     },
+
+	handleSubmit: function(event){
+		dispatch(urlProcessor.getData(this.state.value));
+	},
 
     render: function() {
 		var value = this.state.value;
@@ -27,7 +37,11 @@ var App = React.createClass({
 			'is-valid': this.props.isValid
 		} );
 		return (
-			<input type="text" value={value} onChange={this.handleChange} />
+			<div>
+				<h1>SMRAF!!</h1>
+				<input type="text" value={value} onChange={this.handleChange} />
+				<button onClick={this.handleSubmit}>Submit</button>
+			</div>
 		);
   	},
 
@@ -43,6 +57,8 @@ var App = React.createClass({
 	}
 
 
-});
+};
 
-module.exports = App;
+App = connect()(App)
+
+export default App
