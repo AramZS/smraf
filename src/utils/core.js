@@ -9,9 +9,9 @@ export function setURL(state, urlEntry) {
     return state.set('url', urlEntry);
 }
 
-function getWinners(vote) {
-  if (!vote) return [];
-  const [a, b] = vote.get('pair');
+function getData(stuff) {
+  if (!stuff) return [];
+  const url = vote.get('url');
   const aVotes = vote.getIn(['tally', a], 0);
   const bVotes = vote.getIn(['tally', b], 0);
   if      (aVotes > bVotes)  return [a];
