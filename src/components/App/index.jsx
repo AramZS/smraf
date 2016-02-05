@@ -4,7 +4,23 @@ var Checked = require('../Checked');
 var classNames = require('classnames');
 var Reflux = require('reflux');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import Helmet from "react-helmet";
 var React = require('react');
+
+const metaData = {
+  title: 'Social Media Ready AF?',
+  description: 'Check your social media',
+  canonical: 'http://example.com/path/to/page',
+  meta:
+	[
+	    {'charset': 'utf-8'},
+	    {'keywords': 'react,meta,document,html,tags'},
+    ],
+  link: [
+	  {rel: 'stylesheet',
+	  href: 'app.css'}
+  ]
+};
 
 var ReactPropTypes = React.PropTypes;
 
@@ -57,6 +73,7 @@ let App = React.createClass({
 		}
 		return (
 			<div>
+				<Helmet {...metaData} />
 				<h1>SMRAF!!</h1>
 				<input type="text" value={value} onChange={this.handleChange} />
 				<button onClick={this.handleSubmit}>Submit</button>

@@ -5,7 +5,7 @@ import Router, {Route} from 'react-router';
 import App from './components/App';
 import Enter from './components/Enter';
 import Links from './components/Links';
-
+import styles from './app.scss';
 
 /**
 const routes = <Route component={App}>

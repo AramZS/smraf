@@ -1,0 +1,13 @@
+@import 	'scss-core/settings',
+			'scss-core/foundation';
+
+body {
+	background-color: whitesmoke;
+}
+
+@include foundation-flex-grid;
+@include foundation-typography;
+@include foundation-button;
+@include foundation-forms;
+@include foundation-visibility-classes;
+@include foundation-float-classes;
