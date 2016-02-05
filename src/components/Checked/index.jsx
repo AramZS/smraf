@@ -1,4 +1,4 @@
-var MetaBlock = require('../MetaBlock');
+
 var classNames = require('classnames');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
@@ -8,23 +8,13 @@ var Checked = React.createClass({
 	propTypes:{
 		url: ReactPropTypes.string,
 		data: ReactPropTypes.array,
-		unset: ReactPropTypes.array,
+//		unset: ReactPropTypes.array,
 		calloutGoodType: ReactPropTypes.string,
 		calloutBadType: ReactPropTypes.string
 	},
 
 	render: function() {
-		var mappedObjs = this.props.data.map(function(datum) {
-			var inner =
-			(
-				<span>Meta Set: <strong>{datum.type}</strong>.<br />
-				Meta Content: <strong>{datum.content}</strong></span>
-			);
-			return (
-                <MetaBlock key={datum.type} calloutClass={this.props.calloutGoodType} datum={datum} inner={inner} />
-            );
-        }.bind(this));
-		var unmappedObjs = this.props.unset.map(function(datum) {
+/**		var unmappedObjs = this.props.unset.map(function(datum) {
 			var inner =
 			(
 				<span>Meta Unset: <strong>{datum.type}</strong>.<br />
@@ -33,7 +23,7 @@ var Checked = React.createClass({
             return (
                 <MetaBlock key={datum.type} calloutClass={this.props.calloutBadType} datum={datum} inner={inner} />
             );
-        }.bind(this));
+        }.bind(this));**/
 		return (
 			<ul className="checked-set row">
 				<li key={this.props.url+"/document"} className="large-4 columns checked-set__checked-meta">
@@ -41,8 +31,8 @@ var Checked = React.createClass({
 						<strong>Document:</strong> <a href={this.props.url}>{this.props.url}</a>
 					</div>
 				</li>
-				{mappedObjs}
-				{unmappedObjs}
+				{this.props.children}
+
 			</ul>
 		);
 	},
@@ -50,6 +40,12 @@ var Checked = React.createClass({
 	componentDidUpdate: function() {
     	//this._scrollToBottom();
  	},
+
+	componentWillReceiveProps: function(nextProps, i) {
+
+ 		//console.log(nextProps);
+		//console.log(i);
+	},
 
 	_scrollToBottom: function() {
 

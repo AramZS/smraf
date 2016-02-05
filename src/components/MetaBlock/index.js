@@ -17,7 +17,7 @@ var MetaBlock = React.createClass({
 		return (
 			<li className={classes}>
 				<div className={calloutClasses}>
-					{this.props.inner}
+					{this.props.children}
 				</div>
 			</li>
 		);

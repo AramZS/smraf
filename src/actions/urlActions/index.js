@@ -9,14 +9,16 @@ function _putURLToStore(url){
 	var check = true;
 	urlProcessor.getData(url).catch(
 		function(error){
-			console.log(error);
+			//console.log(error);
 			check = false;
 		}
 	).then( function (docMetaData){
+		//console.log(docMetaData);
 			var docMetaObj = {
 				doc: url,
 				meta: docMetaData
 			};
+			//console.log(docMetaObj);
 			urlStore.loadSet( docMetaObj );
 		}
 	);

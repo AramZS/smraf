@@ -1,6 +1,7 @@
 var urlActions = require('../../actions/urlActions');
 var store = require('../../stores/store.js');
 var Checked = require('../Checked');
+var MetaBlock = require('../MetaBlock');
 var classNames = require('classnames');
 var Reflux = require('reflux');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -25,23 +26,7 @@ const metaData = {
 var ReactPropTypes = React.PropTypes;
 
 let App = React.createClass({
-	mixins: [Reflux.connectFilter(store, "urlMeta", function(urlMetaObjs) {
-		//console.log(this.state);
-		//console.log(urlMetaObjs);
-		if ( null === this.state || undefined === this.state.value ){
-			return false;
-		}
-		var urlMetaObj = urlMetaObjs.filter(function(urlMeta) {
-           return urlMeta.doc === this.state.value;
-        }.bind(this))[0];
-		console.log(urlMetaObj);
-		if ( undefined === urlMetaObj || false === urlMetaObj ) {
-			return false;
-        } else {
-            //this.setState({'urlMeta': {} });
-			return urlMetaObj;
-		}
-    })],
+	mixins: [Reflux.connect(store, "urlsMeta")],
 
 	propTypes:{
 		display: ReactPropTypes.string,
@@ -62,7 +47,7 @@ let App = React.createClass({
     },
 
 	handleSubmit: function(event){
-		urlActions.getURL(this.state.value);
+        this.setState({setValue: this.state.value});
 	},
 
     render: function() {
@@ -73,11 +58,29 @@ let App = React.createClass({
 			'is-error': this.props.isError,
 			'is-valid': this.props.isValid
 		} );
-		console.log(this.state.urlMeta);
-		var checkedObj = (<span></span>);
-		if ( {} !== this.state.urlMeta && undefined !== this.state.urlMeta && false !== this.state.urlMeta){
-			checkedObj = (<Checked key={this.state.urlMeta.doc+"/"} url={this.state.urlMeta.doc} data={this.state.urlMeta.meta.data} unset={this.state.urlMeta.meta.unset} calloutGoodType="success" calloutBadType="alert" />);
-		}
+		//console.log(this.state.urlsMeta);
+        var checkedObj;
+		if ( {} !== this.state.urlsMeta && undefined !== this.state.urlsMeta && false !== this.state.urlsMeta){
+            if (undefined !== this.state.urlsMeta[this.state.setValue]){
+                var urlMeta = this.state.urlsMeta[this.state.setValue];
+                var urlValue = this.state.setValue;
+                var mappedObjs = this.state.urlsMeta[this.state.setValue].map(function(datum) {
+                    var inner =
+                    (
+                        <span>Meta Set: <strong>{datum.type}</strong>.<br />
+                        Meta Content: <strong>{datum.content}</strong></span>
+                    );
+                    return (
+                        <MetaBlock key={datum.type} calloutClass={"success"} datum={datum} >{inner}</MetaBlock>
+                    );
+                }.bind(this));
+    			checkedObj = (
+                    <Checked key={this.state.setValue+"/"} url={urlValue} data={urlMeta} calloutGoodType="success" calloutBadType="alert">{mappedObjs}</Checked>
+                );
+            }
+		} else {
+            checkedObj = (<span></span>);
+        }
 		return (
 			<div>
 				<Helmet {...metaData} />
@@ -92,6 +95,10 @@ let App = React.createClass({
 
 	componentDidUpdate: function() {
 		//this._scrollToBottom();
+		console.log(this.state);
+        if (undefined !== this.state.setValue && this.state.value === this.state.setValue){
+            urlActions.getURL(this.state.value);
+        }
 	},
 
 	/**
