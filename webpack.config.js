@@ -23,7 +23,7 @@ module.exports = {
 				  require.resolve('babel-preset-react')
 			  ]
 		  },
-//		  plugins: ["react-hot"]
+		  plugins: ["react-hot"]
 	  	},
 		{
 	        test: /\.scss$/,
