@@ -1,3 +1,5 @@
+var MetaBlock = require('../MetaBlock');
+var classNames = require('classnames');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 
@@ -5,35 +7,40 @@ var Checked = React.createClass({
 
 	propTypes:{
 		urlMetaObj: ReactPropTypes.object,
+		calloutGoodType: ReactPropTypes.string,
+		calloutBadType: ReactPropTypes.string
 	},
 
 	render: function() {
-		console.log(this.props.urlMetaObj);
-		var checkedObjects = this.props.urlMetaObj.meta.objs.forEach(function(element){
-			var urlMetaSet = this.props.urlMetaObj.meta.data.filter(function(elementObj){
-				return elementObj.type === element;
-			})[0];
-		}.bind(this));
-
 		var mappedObjs = this.props.urlMetaObj.meta.data.map(function(datum) {
-            return (
-                <li className="large-4 columns checked-set__checked-meta" key={datum.type}>
-					<div className="callout success">
-						Meta Set: {datum.type}.
-						Meta Content: {datum.content}
-					</div>
-				</li>
+			var inner =
+			(
+				<span>Meta Set: <strong>{datum.type}</strong>.<br />
+				Meta Content: <strong>{datum.content}</strong></span>
+			);
+			return (
+                <MetaBlock key={this.props.urlMetaObj.doc+'/'+datum.type} calloutClass={this.props.calloutGoodType} datum={datum} inner={inner} />
             );
         }.bind(this));
-
+		var unmappedObjs = this.props.urlMetaObj.meta.unset.map(function(datum) {
+			var inner =
+			(
+				<span>Meta Unset: <strong>{datum.type}</strong>.<br />
+				Used By: <strong>{datum.usedBy}</strong></span>
+			);
+            return (
+                <MetaBlock key={this.props.urlMetaObj.doc+'/'+datum.type} calloutClass={this.props.calloutGoodType} datum={datum} inner={inner} />
+            );
+        }.bind(this));
 		return (
 			<ul className="checked-set row">
-				<li key="document" className="large-4 columns checked-set__checked-meta">
+				<li key={this.props.urlMetaObj.doc+"/document"} className="large-4 columns checked-set__checked-meta">
 					<div className="callout primary">
-						Document: {this.props.urlMetaObj.doc}
+						<strong>Document:</strong> <a href={this.props.urlMetaObj.doc}>{this.props.urlMetaObj.doc}</a>
 					</div>
 				</li>
 				{mappedObjs}
+				{unmappedObjs}
 			</ul>
 		);
 	},

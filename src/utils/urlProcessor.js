@@ -185,9 +185,17 @@ module.exports = {
 				);
 			}.bind(this)
 		).then( function(){
+			var unsets = [];
+			for ( var key in this.socials ){
+				if (!this.socials.hasOwnProperty(key)) continue;
+
+				var obj = this.socials[key];
+				obj.type = key;
+				unsets.push(obj);
+			}
 			return {
 				data: this.data,
-				unset: this.socials,
+				unset: unsets,
         		objs: this.objs
 			};
 		}.bind(this));
