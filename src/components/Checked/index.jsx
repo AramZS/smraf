@@ -14,24 +14,27 @@ var Checked = React.createClass({
 	},
 
 	render: function() {
+		var c = 0;
 		var mappedObjs = this.props.data.map(function(datum) {
+			c++;
 			var inner =
 			(
 				<span>Meta Set: <strong>{datum.type}</strong>.<br />
 				Meta Content: <strong>{datum.content}</strong></span>
 			);
 			return (
-                <MetaBlock key={datum.type} calloutClass={this.props.calloutGoodType} datum={datum} inner={inner} />
+                <MetaBlock key={datum.type+c} calloutClass={this.props.calloutGoodType} datum={datum} inner={inner} />
             );
         }.bind(this));
 		var unmappedObjs = this.props.unset.map(function(datum) {
+			c++;
 			var inner =
 			(
 				<span>Meta Unset: <strong>{datum.type}</strong>.<br />
 				Used By: <strong>{datum.usedBy}</strong></span>
 			);
             return (
-                <MetaBlock key={datum.type} calloutClass={this.props.calloutBadType} datum={datum} inner={inner} />
+                <MetaBlock key={datum.type+c} calloutClass={this.props.calloutBadType} datum={datum} inner={inner} />
             );
         }.bind(this));
 		return (
