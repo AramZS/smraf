@@ -1,0 +1,27 @@
+linters:
+    Indentation:
+      enabled: true
+      allow_non_nested_indentation: false
+      character: "tab"
+      width: 1
+    SpaceBetweenParens:
+      enabled: true
+      spaces: 1
+    Comment:
+        enabled: false
+    VendorPrefix:
+        enabled: false
+        identifier_list: base
+        additional_identifiers: []
+        excluded_identifiers: [-webkit-input-placeholder,-moz-placeholder,-moz-placeholder,-ms-input-placeholder]
+    NestingDepth:
+        enabled: true
+        max_depth: 4
+        ignore_parent_selectors: false
+    QualifyingElement:
+        enabled: false
+    PlaceholderInExtend:
+        enabled: false
+    SelectorFormat:
+        enabled: true
+        convention: strict_BEM
