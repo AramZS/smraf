@@ -127,6 +127,8 @@ module.exports = {
 			var xhr = new XMLHttpRequest();
 			xhr.open('get', url, true);
 			xhr.responseType = 'document';
+			xhr.setRequestHeader(
+    			'user-agent', 'AdsBot-Google (+http://www.google.com/adsbot.html)');
 			//xhr.withCredentials = true;
 			//console.log(xhr);
 			xhr.onload = function() {
