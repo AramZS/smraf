@@ -146,8 +146,6 @@ module.exports = {
 	getData: function(url) {
 		var docMetaData = this.getDocument(url).then(
 			function( docFound ){
-				this.data = [];
-				this.objs = [];
 				var cannonical = docFound.querySelectorAll('[rel="canonical"]')[0].getAttribute('href');
 				if ( cannonical !== docFound.URL){
 					this.data.push({
@@ -162,14 +160,14 @@ module.exports = {
 
 				for (var i = 0; i < list.length; i++) {
 					var tagObj = this.getMetaFromTag(list[i]);
-          //console.log(list[i]);
+          console.log(list[i]);
           //console.log(tagObj);
 					if (undefined !== tagObj && this.socials.hasOwnProperty(tagObj.type)){
 						tagObj.about = this.socials[tagObj.type].about;
 						tagObj.usedBy = this.socials[tagObj.type].usedBy;
 						tagObj.field = this.socials[tagObj.type].field;
 						this.data.push(tagObj);
-						//delete this.socials[tagObj.type];
+						delete this.socials[tagObj.type];
 					}
 				    //console.log(list[i].getAttribute('content')); //second console output
 					if ( list.length === i ){
@@ -201,14 +199,14 @@ module.exports = {
         		objs: this.objs
 			};
 		}.bind(this));
-		console.log();
+
 		return docMetaData;
 	},
 
 	getMetaFromTag: function(element){
 		var objM = this.checkForValidAttr(element);
-	    //console.log('gM');
-	    //console.log(objM);
+	    console.log('gM');
+	    console.log(objM);
 	    return objM;
 	},
 
@@ -233,12 +231,12 @@ module.exports = {
 	          switch (aTag) {
 	            case 'name':
 	            	returned = this.assignMeta(tagName, tag, 'content');
-	              //console.log(returned);
+	              console.log(returned);
 	              break;
 	            case 'property':
 	              //console.log(tag.content);
 	              returned = this.assignMeta(tagName, tag, 'content');
-	              //console.log(returned);
+	              console.log(returned);
 	              break;
 	            case 'rel':
 	              returned = this.assignMeta(tagName, tag, 'href');
