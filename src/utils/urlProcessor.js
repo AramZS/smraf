@@ -127,6 +127,7 @@ module.exports = {
 			var xhr = new XMLHttpRequest();
 			xhr.open('get', url, true);
 			xhr.responseType = 'document';
+			//xhr.withCredentials = true;
 			//console.log(xhr);
 			xhr.onload = function() {
 				//console.log(xhr.responseXML);

@@ -34,7 +34,7 @@ let App = React.createClass({
 		var urlMetaObj = urlMetaObjs.filter(function(urlMeta) {
            return urlMeta.doc === this.state.value;
         }.bind(this))[0];
-		console.log(urlMetaObj);
+		//console.log(urlMetaObj);
 		if ( undefined === urlMetaObj || false === urlMetaObj ) {
 			return false;
         } else {
@@ -48,6 +48,12 @@ let App = React.createClass({
 
 	getInitialState: function() {
 		return {value: 'Type URL here'};
+    },
+
+    handleInputInitClick: function(event){
+        if ( 'Type URL here' === this.state.value ){
+            this.setState({value: ''});
+        }
     },
 
     handleChange: function(event) {
@@ -66,7 +72,7 @@ let App = React.createClass({
 			'is-error': this.props.isError,
 			'is-valid': this.props.isValid
 		} );
-		console.log(this.state.urlMeta);
+		//console.log(this.state.urlMeta);
 		var checkedObj = (<span></span>);
 		if (undefined !== this.state.urlMeta && false !== this.state.urlMeta){
 			checkedObj = (<Checked urlMetaObj={this.state.urlMeta} />);
@@ -75,8 +81,8 @@ let App = React.createClass({
 			<div>
 				<Helmet {...metaData} />
 				<h1>SMRAF!!</h1>
-				<input type="text" value={value} onChange={this.handleChange} />
-				<button onClick={this.handleSubmit}>Submit</button>
+				<input type="text" value={value} onChange={this.handleChange} onClick={this.handleInputInitClick} />
+				<button className="button" onClick={this.handleSubmit}>Submit</button>
 				<br />
 				{checkedObj}
 			</div>

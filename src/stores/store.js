@@ -34,8 +34,10 @@ var urlStore = Reflux.createStore({
 
     loadSet: function(docMetaObj){
         //console.log(socialObj);
-        _updateStoreWithNewMeta(docMetaObj);
-        this.urlsUpdated(_urls);
+        if (undefined !== this.get(docMetaObj.doc)){
+            _updateStoreWithNewMeta(docMetaObj);
+            this.urlsUpdated(_urls);
+        }
     },
 
     urlsUpdated: function(urls){

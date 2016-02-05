@@ -17,13 +17,22 @@ var Checked = React.createClass({
 
 		var mappedObjs = this.props.urlMetaObj.meta.data.map(function(datum) {
             return (
-                <li>Meta Set: {datum.type}. Meta Content: {datum.content}</li>
+                <li className="large-4 columns checked-set__checked-meta" key={datum.type}>
+					<div className="callout success">
+						Meta Set: {datum.type}.
+						Meta Content: {datum.content}
+					</div>
+				</li>
             );
         }.bind(this));
 
 		return (
-			<ul>
-				<li>Document: {this.props.urlMetaObj.doc}</li>
+			<ul className="checked-set row">
+				<li key="document" className="large-4 columns checked-set__checked-meta">
+					<div className="callout primary">
+						Document: {this.props.urlMetaObj.doc}
+					</div>
+				</li>
 				{mappedObjs}
 			</ul>
 		);

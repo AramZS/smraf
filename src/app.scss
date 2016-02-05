@@ -1,13 +1,21 @@
-@import 	'scss-core/settings',
+@import 	'scss-core/colors',
+			'scss-core/settings',
 			'scss-core/foundation';
 
 body {
 	background-color: whitesmoke;
 }
 
-@include foundation-flex-grid;
+@include foundation-global-styles;
+@include foundation-grid;
 @include foundation-typography;
 @include foundation-button;
 @include foundation-forms;
 @include foundation-visibility-classes;
 @include foundation-float-classes;
+@include foundation-button-group;
+@include foundation-callout;
+
+/** Components **/
+
+@import 'components/Checked/style';
