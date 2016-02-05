@@ -4,13 +4,13 @@ var webpack = require('webpack'),
 
 module.exports = {
 	entry: [
-		'webpack-dev-server/client?http://localhost:8080',
-	    'webpack/hot/only-dev-server',
+//		'webpack-dev-server/client?http://localhost:8080',
+//	    'webpack/hot/only-dev-server',
 	    './src/app.jsx',
         './src/app.scss'
 	],
 	devtool: 'inline-source-map',
-	debug: true,
+//	debug: true,
   	module: {
 	  loaders: [
 		{
@@ -45,12 +45,12 @@ module.exports = {
 		publicPath: '/',
 		filename: 'app.js'
 	},
-	devServer: {
-		contentBase: './dist',
-		hot: true  //http://localhost:8080/webpack-dev-server/
-	},
+//	devServer: {
+//		contentBase: './dist',
+//		hot: false  //http://localhost:8080/webpack-dev-server/
+//	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
+//		new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin( "app.css" )
 	]
 };
