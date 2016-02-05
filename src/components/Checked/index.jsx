@@ -6,37 +6,39 @@ var ReactPropTypes = React.PropTypes;
 var Checked = React.createClass({
 
 	propTypes:{
-		urlMetaObj: ReactPropTypes.object,
+		url: ReactPropTypes.string,
+		data: ReactPropTypes.array,
+		unset: ReactPropTypes.array,
 		calloutGoodType: ReactPropTypes.string,
 		calloutBadType: ReactPropTypes.string
 	},
 
 	render: function() {
-		var mappedObjs = this.props.urlMetaObj.meta.data.map(function(datum) {
+		var mappedObjs = this.props.data.map(function(datum) {
 			var inner =
 			(
 				<span>Meta Set: <strong>{datum.type}</strong>.<br />
 				Meta Content: <strong>{datum.content}</strong></span>
 			);
 			return (
-                <MetaBlock key={this.props.urlMetaObj.doc+'/'+datum.type} calloutClass={this.props.calloutGoodType} datum={datum} inner={inner} />
+                <MetaBlock key={datum.type} calloutClass={this.props.calloutGoodType} datum={datum} inner={inner} />
             );
         }.bind(this));
-		var unmappedObjs = this.props.urlMetaObj.meta.unset.map(function(datum) {
+		var unmappedObjs = this.props.unset.map(function(datum) {
 			var inner =
 			(
 				<span>Meta Unset: <strong>{datum.type}</strong>.<br />
 				Used By: <strong>{datum.usedBy}</strong></span>
 			);
             return (
-                <MetaBlock key={this.props.urlMetaObj.doc+'/'+datum.type} calloutClass={this.props.calloutGoodType} datum={datum} inner={inner} />
+                <MetaBlock key={datum.type} calloutClass={this.props.calloutBadType} datum={datum} inner={inner} />
             );
         }.bind(this));
 		return (
 			<ul className="checked-set row">
-				<li key={this.props.urlMetaObj.doc+"/document"} className="large-4 columns checked-set__checked-meta">
+				<li key={this.props.url+"/document"} className="large-4 columns checked-set__checked-meta">
 					<div className="callout primary">
-						<strong>Document:</strong> <a href={this.props.urlMetaObj.doc}>{this.props.urlMetaObj.doc}</a>
+						<strong>Document:</strong> <a href={this.props.url}>{this.props.url}</a>
 					</div>
 				</li>
 				{mappedObjs}

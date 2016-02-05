@@ -27,14 +27,14 @@ var ReactPropTypes = React.PropTypes;
 let App = React.createClass({
 	mixins: [Reflux.connectFilter(store, "urlMeta", function(urlMetaObjs) {
 		//console.log(this.state);
-		console.log(urlMetaObjs);
+		//console.log(urlMetaObjs);
 		if ( null === this.state || undefined === this.state.value ){
 			return false;
 		}
 		var urlMetaObj = urlMetaObjs.filter(function(urlMeta) {
            return urlMeta.doc === this.state.value;
         }.bind(this))[0];
-		//console.log(urlMetaObj);
+		console.log(urlMetaObj);
 		if ( undefined === urlMetaObj || false === urlMetaObj ) {
 			return false;
         } else {
@@ -76,7 +76,7 @@ let App = React.createClass({
 		console.log(this.state.urlMeta);
 		var checkedObj = (<span></span>);
 		if ( {} !== this.state.urlMeta && undefined !== this.state.urlMeta && false !== this.state.urlMeta){
-			checkedObj = (<Checked key={this.state.urlMeta.doc} urlMetaObj={this.state.urlMeta} calloutGoodType="success" calloutBadType="alert" />);
+			checkedObj = (<Checked key={this.state.urlMeta.doc+"/"} url={this.state.urlMeta.doc} data={this.state.urlMeta.meta.data} unset={this.state.urlMeta.meta.unset} calloutGoodType="success" calloutBadType="alert" />);
 		}
 		return (
 			<div>
