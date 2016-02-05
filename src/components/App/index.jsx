@@ -1,5 +1,6 @@
 var urlActions = require('../../actions/urlActions');
 var store = require('../../stores/store.js');
+var Checked = require('../Checked');
 var classNames = require('classnames');
 var Reflux = require('reflux');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -9,15 +10,15 @@ var ReactPropTypes = React.PropTypes;
 
 let App = React.createClass({
 	mixins: [Reflux.connectFilter(store, "urlMeta", function(urlMetaObjs) {
-		console.log(this.state);
-		console.log(urlMetaObjs);
+		//console.log(this.state);
+		//console.log(urlMetaObjs);
 		if ( null === this.state || undefined === this.state.value ){
 			return false;
 		}
 		var urlMetaObj = urlMetaObjs.filter(function(urlMeta) {
            return urlMeta.doc === this.state.value;
         }.bind(this))[0];
-		//console.log(this.props.post);
+		console.log(urlMetaObj);
 		if ( undefined === urlMetaObj || false === urlMetaObj ) {
 			return false;
         } else {
@@ -49,13 +50,18 @@ let App = React.createClass({
 			'is-error': this.props.isError,
 			'is-valid': this.props.isValid
 		} );
+		console.log(this.state.urlMeta);
+		var checkedObj = (<span></span>);
+		if (undefined !== this.state.urlMeta && false !== this.state.urlMeta){
+			checkedObj = (<Checked urlMetaObj={this.state.urlMeta} />);
+		}
 		return (
 			<div>
 				<h1>SMRAF!!</h1>
 				<input type="text" value={value} onChange={this.handleChange} />
 				<button onClick={this.handleSubmit}>Submit</button>
 				<br />
-				{JSON.stringify(this.state.urlMeta)}
+				{checkedObj}
 			</div>
 		);
   	},

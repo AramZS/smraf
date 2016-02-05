@@ -185,7 +185,7 @@ module.exports = {
 			}.bind(this)
 		).then( function(){
 			return {
-				set: this.data,
+				data: this.data,
 				unset: this.socials,
         		objs: this.objs
 			};
