@@ -120,7 +120,7 @@ module.exports = {
 	 */
 	data: [],
 
-  	objs: {},
+  	objs: [],
 
 	getDocument: function(url) {
 		return new Promise(function(resolve, reject) {
@@ -164,6 +164,7 @@ module.exports = {
 					if (undefined !== tagObj && this.socials.hasOwnProperty(tagObj.type)){
 						tagObj.about = this.socials[tagObj.type].about;
 						tagObj.usedBy = this.socials[tagObj.type].usedBy;
+						tagObj.field = this.socials[tagObj.type].field;
 						this.data.push(tagObj);
 						delete this.socials[tagObj.type];
 					}
@@ -247,7 +248,7 @@ module.exports = {
             type: tagName,
             content: tag.getAttribute(tagType)
           };
-          this.objs[tagName] = returned;
+          this.objs.push(tagName);
 		  return returned;
 	}
 

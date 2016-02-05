@@ -5,6 +5,8 @@ module.exports = {
 	    'webpack/hot/only-dev-server',
 	    './src/app.jsx'
 	],
+	devtool: 'inline-source-map',
+	debug: true,
   	module: {
 	  loaders: [{
 		  test: /\.jsx?$/,
