@@ -122,10 +122,12 @@ module.exports = {
 
   	objs: [],
 
+	proxy: 'http://limitless-peak-47232.herokuapp.com/?smraf=secrettokenyo&smrafurl=',
+
 	getDocument: function(url) {
 		return new Promise(function(resolve, reject) {
 			var xhr = new XMLHttpRequest();
-			xhr.open('get', 'http://limitless-peak-47232.herokuapp.com/?smraf=secrettokenyo&smrafurl='+url, true);
+			xhr.open('get', this.proxy+url, true);
 			xhr.responseType = 'document';
 			//xhr.withCredentials = true;
 			//console.log(xhr);
@@ -149,6 +151,7 @@ module.exports = {
 			function( docFound ){
 				this.data = [];
 				this.objs = [];
+				docFound.URL = docfound.URL.substring(0, this.proxy.length);
 				if ( 0 !== docFound.querySelectorAll('[rel="canonical"]').length){
 					var canonical = docFound.querySelectorAll('[rel="canonical"]')[0].getAttribute('href');
 					if ( canonical !== docFound.URL){
