@@ -122,10 +122,12 @@ module.exports = {
 
   	objs: [],
 
+	proxy: 'http://limitless-peak-47232.herokuapp.com/?smraf=secrettokenyo&smrafurl=',
+
 	getDocument: function(url) {
 		return new Promise(function(resolve, reject) {
 			var xhr = new XMLHttpRequest();
-			xhr.open('get', 'http://limitless-peak-47232.herokuapp.com/?smraf=secrettokenyo&smrafurl='+url, true);
+			xhr.open('get', this.proxy+url, true);
 			xhr.responseType = 'document';
 			//xhr.withCredentials = true;
 			//console.log(xhr);
@@ -140,7 +142,7 @@ module.exports = {
 				}
 			};
 			xhr.send();
-		});
+		}.bind(this));
 	},
 
 	getData: function(url) {
@@ -149,16 +151,18 @@ module.exports = {
 			function( docFound ){
 				this.data = [];
 				this.objs = [];
+				//console.log(docFound);
 				if ( 0 !== docFound.querySelectorAll('[rel="canonical"]').length){
-					var cannonical = docFound.querySelectorAll('[rel="canonical"]')[0].getAttribute('href');
-					if ( cannonical !== docFound.URL){
+					var canonical = docFound.querySelectorAll('[rel="canonical"]')[0].getAttribute('href');
+					if ( canonical !== url){
+						console.log(url + ' URL is not canonical ' + canonical);
 						this.data.push({
 							type: 'referer',
-							content: docFound.URL,
+							content: url,
 							about: '',
 							usedBy: ['general', 'facebook', 'twitter']
 						});
-						return this.getData(cannonical);
+						return this.getData(canonical);
 					}
 				}
 				var list = docFound.head.getElementsByTagName('*');
