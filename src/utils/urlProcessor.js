@@ -142,7 +142,7 @@ module.exports = {
 				}
 			};
 			xhr.send();
-		});
+		}.bind(this));
 	},
 
 	getData: function(url) {
@@ -151,14 +151,14 @@ module.exports = {
 			function( docFound ){
 				this.data = [];
 				this.objs = [];
-				docFound.URL = docfound.URL.substring(0, this.proxy.length);
+				//console.log(docFound);
 				if ( 0 !== docFound.querySelectorAll('[rel="canonical"]').length){
 					var canonical = docFound.querySelectorAll('[rel="canonical"]')[0].getAttribute('href');
-					if ( canonical !== docFound.URL){
-						console.log(docFound.URL + ' URL is not canonical ' + canonical);
+					if ( canonical !== url){
+						console.log(url + ' URL is not canonical ' + canonical);
 						this.data.push({
 							type: 'referer',
-							content: docFound.URL,
+							content: url,
 							about: '',
 							usedBy: ['general', 'facebook', 'twitter']
 						});
