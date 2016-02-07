@@ -150,15 +150,16 @@ module.exports = {
 				this.data = [];
 				this.objs = [];
 				if ( 0 !== docFound.querySelectorAll('[rel="canonical"]').length){
-					var cannonical = docFound.querySelectorAll('[rel="canonical"]')[0].getAttribute('href');
-					if ( cannonical !== docFound.URL){
+					var canonical = docFound.querySelectorAll('[rel="canonical"]')[0].getAttribute('href');
+					if ( canonical !== docFound.URL){
+						console.log('URL is not canonical.');
 						this.data.push({
 							type: 'referer',
 							content: docFound.URL,
 							about: '',
 							usedBy: ['general', 'facebook', 'twitter']
 						});
-						return this.getData(cannonical);
+						return this.getData(canonical);
 					}
 				}
 				var list = docFound.head.getElementsByTagName('*');
