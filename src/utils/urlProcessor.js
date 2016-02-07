@@ -152,7 +152,7 @@ module.exports = {
 				if ( 0 !== docFound.querySelectorAll('[rel="canonical"]').length){
 					var canonical = docFound.querySelectorAll('[rel="canonical"]')[0].getAttribute('href');
 					if ( canonical !== docFound.URL){
-						console.log('URL is not canonical.');
+						console.log(docFound.URL + ' URL is not canonical ' + canonical);
 						this.data.push({
 							type: 'referer',
 							content: docFound.URL,
