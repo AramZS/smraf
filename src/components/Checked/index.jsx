@@ -16,7 +16,7 @@ var Checked = React.createClass({
 	usedByString: function(arrayOfStrings) {
 		return arrayOfStrings.map(function(socialMediaNetwork){
 			return (
-				<span>{socialMediaNetwork}, </span>
+				<span key={socialMediaNetwork}>{socialMediaNetwork}, </span>
 			);
 		});
 	},

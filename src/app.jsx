@@ -7,15 +7,12 @@ import Enter from './components/Enter';
 import Links from './components/Links';
 import styles from './app.scss';
 
-/**
-const routes = <Route component={App}>
-  <Route path="/links" component={Links} />
-  <Route path="/" component={Enter} />
+
+const routes = <Route path='/' component={App}>
+  <Route path="/link/" component={App} />
 </Route>;
 
-<Router>{routes}</Router>,
-**/
 ReactDOM.render(
-    <App />,
+    <Router>{routes}</Router>,
     document.getElementById('app')
 );

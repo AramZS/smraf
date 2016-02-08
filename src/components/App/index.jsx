@@ -1,6 +1,7 @@
 var urlActions = require('../../actions/urlActions');
 var store = require('../../stores/store.js');
 var Checked = require('../Checked');
+import { Link } from 'react-router';
 var classNames = require('classnames');
 var Reflux = require('reflux');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -44,15 +45,26 @@ let App = React.createClass({
     })],
 
 	propTypes:{
-		display: ReactPropTypes.string,
+		displayUrl: ReactPropTypes.string,
+	},
+
+	contextTypes: {
+	  router: React.PropTypes.func
 	},
 
 	getInitialState: function() {
-		return {value: 'Type URL here'};
+		//console.log(this.props.location.query);
+		var displayUrl = this.props.location.query.url;
+		var initState = {value: 'Type URL here'};
+		if ( undefined !== displayUrl && false !== displayUrl ){
+			initState = {value: displayUrl};
+			urlActions.getURL(displayUrl);
+		}
+		return initState;
     },
 
     handleInputInitClick: function(event){
-        if ( 'Type URL here' === this.state.value ){
+        if ( 'Type URL here' === this.state.value || this.props.location.query.url === this.state.value ){
             this.setState({value: ''});
         }
     },
@@ -83,7 +95,7 @@ let App = React.createClass({
 				<Helmet {...metaData} />
 				<h1>SMRAF!!</h1>
 				<input type="text" value={value} onChange={this.handleChange} onClick={this.handleInputInitClick} />
-				<button className="button" onClick={this.handleSubmit}>Submit</button>
+				<Link to={'/link/?url='+this.state.value} className="button" onClick={this.handleSubmit}>Submit</Link>
 				<br />
 				{checkedObj}
 			</div>
