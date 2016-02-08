@@ -13,6 +13,14 @@ var Checked = React.createClass({
 		calloutBadType: ReactPropTypes.string
 	},
 
+	usedByString: function(arrayOfStrings) {
+		return arrayOfStrings.map(function(socialMediaNetwork){
+			return (
+				<span>{socialMediaNetwork}, </span>
+			);
+		});
+	},
+
 	render: function() {
 		var c = 0;
 		var mappedObjs = this.props.data.map(function(datum) {
@@ -31,7 +39,7 @@ var Checked = React.createClass({
 			var inner =
 			(
 				<span>Meta Unset: <strong>{datum.type}</strong>.<br />
-				Used By: <strong>{datum.usedBy}</strong></span>
+				Used By: <strong>{this.usedByString(datum.usedBy)}</strong></span>
 			);
             return (
                 <MetaBlock key={datum.type+c} calloutClass={this.props.calloutBadType} datum={datum} inner={inner} />
