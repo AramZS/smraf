@@ -240,12 +240,12 @@ module.exports = {
 	          switch (aTag) {
 	            case 'name':
 	            	returned = this.assignMeta(tagName, tag, 'content');
-	              console.log(returned);
+	              //console.log(returned);
 	              break;
 	            case 'property':
 	              //console.log(tag.content);
 	              returned = this.assignMeta(tagName, tag, 'content');
-	              console.log(returned);
+	              //console.log(returned);
 	              break;
 	            case 'rel':
 	              returned = this.assignMeta(tagName, tag, 'href');
